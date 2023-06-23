@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import formImg from "../assets/img/formImg.png";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
+
+
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,11 +15,29 @@ function SignIn() {
     password: "",
   });
   const { email, password } = formData;
+  const navigate = useNavigate()
+
   function onChange(e) {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  }
+
+  async function onSubmit(e){
+    e.preventDefault()
+
+    try {
+      const auth = getAuth()
+      const userCrendential = await signInWithEmailAndPassword(auth, email, password)
+
+      if(userCrendential.user){
+        navigate("/")
+      }
+      
+    } catch (error) {
+      toast.error("Ban user credentials")
+    }
   }
 
   return (
@@ -26,7 +48,7 @@ function SignIn() {
           <img className="w-full rounded-2xl" src={formImg} alt="" />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form className="">
+          <form className="" onSubmit={onSubmit}>
             <input
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out mb-6"
               type="email"

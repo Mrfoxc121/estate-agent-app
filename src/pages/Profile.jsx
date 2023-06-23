@@ -1,12 +1,19 @@
+import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Profile() {
+  const navigate = useNavigate()
+  const auth = getAuth()
   
   const [formData, setFormData] = useState({
-    name: "John Doe",
-    email: "thismail@myemail.com",
+    name: auth.currentUser.display,
   });
   const { name, email } = formData;
+  function onLogout() {
+    auth.signOut()
+    navigate("/")
+  }
 
   return (
     <>
@@ -35,8 +42,8 @@ function Profile() {
                   Edit
                 </span>
               </p>
-              <p>
-                <span to="/sign-up" className="text-blue-600 hover:text-blue-800 transition ease-in-out duration-200 cursor-pointer">
+              <p onClick={onLogout} className="text-blue-600 hover:text-blue-800 transition ease-in-out duration-200 cursor-pointer">
+                <span to="/sign-up">
                   Sign out
                 </span>
               </p>

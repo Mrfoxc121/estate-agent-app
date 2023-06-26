@@ -1,6 +1,7 @@
 import { getAuth, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { FcHome } from "react-icons/fc";
 import { toast } from "react-toastify";
 import {
   collection,
@@ -13,6 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const auth = getAuth();
@@ -20,7 +22,7 @@ function Profile() {
   const [changeDetail, setChangeDetail] = useState(false);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
-    email: auth.currentUser.email
+    email: auth.currentUser.email,
   });
   const { name, email } = formData;
   function onLogout() {
@@ -43,10 +45,10 @@ function Profile() {
 
         // update name in firestore
         const docRef = doc(db, "users", auth.currentUser.uid);
-        await updateDoc(docRef, { 
+        await updateDoc(docRef, {
           name,
-         });
-         toast.success("Successfully updated profile details")
+        });
+        toast.success("Successfully updated profile details");
       }
     } catch (error) {
       toast.err("Could not update the profile details");
@@ -96,13 +98,16 @@ function Profile() {
                 <span to="/sign-up">Sign out</span>
               </p>
             </div>
+          </form>
+          <Link to="/create-listing">
             <button
               type="button"
-              className="flex items-center justify-center w-full bg-blue-700 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-blue-800 active:bg-blue-900 shadow-md hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out rounded"
+              className="flex items-center justify-center w-full bg-blue-600 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-blue-800 active:bg-blue-900 shadow-md hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out rounded"
             >
+              <FcHome className="mr-2 text-3xl bg-red-200 rounded-full p-1 border-2" />
               Sell or rent your home
             </button>
-          </form>
+          </Link>
         </div>
       </section>
     </>

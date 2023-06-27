@@ -102,12 +102,15 @@ function Profile() {
           <Link to="/create-listing">
             <button
               type="button"
-              className="flex items-center justify-center w-full bg-blue-600 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-blue-800 active:bg-blue-900 shadow-md hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out rounded"
+              className="flex items-center justify-center w-full bg-blue-600 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-blue-800 active:bg-blue-900 shadow-md hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out rounded mb-6"
             >
               <FcHome className="mr-2 text-3xl bg-red-200 rounded-full p-1 border-2" />
               Sell or rent your home
             </button>
           </Link>
+        </div>
+        <div className="">
+          <h2 className="text-2xl">My Listings</h2>
         </div>
       </section>
     </>

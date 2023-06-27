@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ListingItem() {
+function ListingItem({listing, id}) {
   return (
-    <div>ListingItem</div>
+    <div>{listing.name}</div>
   )
 }
 

@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { MdLocationOn } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
-function ListingItem({ listing, id }) {
+function ListingItem({ listing, id, onEdit, onDelete }) {
   return (
     <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 mb-4">
       <Link to={`/category/${listing.type}/${id}`} className="contents">
@@ -35,13 +37,25 @@ function ListingItem({ listing, id }) {
             <div className="flex items-center space-x-1">
               <p className="font-bold text-xs">
                 {listing.bathrooms > 1
-                  ? `${listing.bathrooms} Beds`
+                  ? `${listing.bathrooms} Bathrooms`
                   : "1 Bathroom"}
               </p>
             </div>
           </div>
         </div>
       </Link>
+      {onDelete && (
+        <FaTrash
+          className="absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-500"
+          onClick={() => onDelete(listing.id)}
+        />
+      )}
+      {onEdit && (
+        <MdEdit
+          className="absolute bottom-2 right-7 h-4 cursor-pointer "
+          onClick={() => onEdit(listing.id)}
+        />
+      )}
     </li>
   );
 }

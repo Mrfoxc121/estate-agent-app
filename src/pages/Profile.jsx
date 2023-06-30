@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { FcHome } from "react-icons/fc";
 import { toast } from "react-toastify";
 import {
-  Query,
   collection,
   deleteDoc,
   doc,

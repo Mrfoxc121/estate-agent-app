@@ -90,7 +90,7 @@ export default function CreateListing() {
     let location;
     if (geolocationEnabled) {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key='AIzaSyAgv7iNRTHors-XVRJNXgJnICkZj4BFJAA'`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
       );
       const data = await response.json();
       console.log(data);
@@ -118,6 +118,8 @@ export default function CreateListing() {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
@@ -131,9 +133,12 @@ export default function CreateListing() {
             }
           },
           (error) => {
+            // Handle unsuccessful uploads
             reject(error);
           },
           () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               resolve(downloadURL);
             });
